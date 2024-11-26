@@ -155,3 +155,57 @@
     </div>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up and Sign In</title>
+    <script>
+        function signUp() {
+            const username = prompt("Create a Username:");
+            const password = prompt("Create a Password:");
+
+            if (username && password) {
+                localStorage.setItem("username", username);
+                localStorage.setItem("password", password);
+                alert("Sign Up Successful! You can now Sign In.");
+            } else {
+                alert("Both Username and Password are required for Sign Up.");
+            }
+        }
+
+        function signIn() {
+            const enteredUsername = prompt("Enter your Username:");
+            const enteredPassword = prompt("Enter your Password:");
+
+            const storedUsername = localStorage.getItem("username");
+            const storedPassword = localStorage.getItem("password");
+
+            if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
+                alert("Access Granted!");
+                document.getElementById("content").style.display = "block";
+            } else {
+                alert("Invalid Username or Password!");
+            }
+        }
+
+        function startApp() {
+            const hasAccount = confirm("Do you have an account? Click 'OK' for Yes, 'Cancel' for No.");
+            if (hasAccount) {
+                signIn();
+            } else {
+                signUp();
+            }
+        }
+
+        window.onload = startApp; // Start the app when the page loads
+    </script>
+</head>
+<body>
+    <div id="content" style="display:none;">
+        <h1>Welcome to the Protected Page!</h1>
+        <p>This is your secure content.</p>
+    </div>
+</body>
+</html>
