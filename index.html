@@ -122,90 +122,121 @@
       document.getElementById("taskPage").classList.add("hidden");
     }
   </script><!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Private Page</title>
-    <script>
-        var username = "user"; // اسم المستخدم
-        var password = "password"; // كلمة المرور
-
-        function checkPassword() {
-            var enteredUsername = prompt("Enter Username:");
-            var enteredPassword = prompt("Enter Password:");
-
-            if (enteredUsername === username && enteredPassword === password) {
-                alert("Access Granted!");
-                document.getElementById("content").style.display = "block"; // يظهر المحتوى
-            } else {
-                alert("Access Denied!");
-                window.location.reload(); // يعيد تحميل الصفحة إذا كانت البيانات غير صحيحة
-            }
-        }
-
-        window.onload = checkPassword; // ينفذ التحقق عند تحميل الصفحة
-    </script>
-</head>
-<body>
-    <div id="content" style="display:none;">
-        <!-- هذا هو المحتوى اللي هيظهر بعد التحقق -->
-        <h1>Welcome to the Private Page!</h1>
-        <p>This is the protected content.</p>
-    </div>
-</body>
-</html>
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up and Sign In</title>
+    <title>Sign Up & Sign In</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            text-align: center;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+        }
+
+        .container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="signup-form">
+        <h1>Sign Up</h1>
+        <input type="text" id="signup-username" placeholder="Enter Username" required>
+        <input type="password" id="signup-password" placeholder="Enter Password" required>
+        <button onclick="signUp()">Sign Up</button>
+    </div>
+
+    <div class="container hidden" id="signin-form">
+        <h1>Sign In</h1>
+        <input type="text" id="signin-username" placeholder="Enter Username" required>
+        <input type="password" id="signin-password" placeholder="Enter Password" required>
+        <button onclick="signIn()">Sign In</button>
+    </div>
+
+    <div class="container hidden" id="content">
+        <h1>Welcome!</h1>
+        <p>You have successfully logged in.</p>
+    </div>
+
     <script>
         function signUp() {
-            const username = prompt("Create a Username:");
-            const password = prompt("Create a Password:");
+            const username = document.getElementById("signup-username").value;
+            const password = document.getElementById("signup-password").value;
 
             if (username && password) {
                 localStorage.setItem("username", username);
                 localStorage.setItem("password", password);
-                alert("Sign Up Successful! You can now Sign In.");
+                alert("Sign Up Successful! Please Sign In.");
+                document.getElementById("signup-form").classList.add("hidden");
+                document.getElementById("signin-form").classList.remove("hidden");
             } else {
-                alert("Both Username and Password are required for Sign Up.");
+                alert("Both fields are required!");
             }
         }
 
         function signIn() {
-            const enteredUsername = prompt("Enter your Username:");
-            const enteredPassword = prompt("Enter your Password:");
+            const enteredUsername = document.getElementById("signin-username").value;
+            const enteredPassword = document.getElementById("signin-password").value;
 
             const storedUsername = localStorage.getItem("username");
             const storedPassword = localStorage.getItem("password");
 
             if (enteredUsername === storedUsername && enteredPassword === storedPassword) {
                 alert("Access Granted!");
-                document.getElementById("content").style.display = "block";
+                document.getElementById("signin-form").classList.add("hidden");
+                document.getElementById("content").classList.remove("hidden");
             } else {
                 alert("Invalid Username or Password!");
             }
         }
-
-        function startApp() {
-            const hasAccount = confirm("Do you have an account? Click 'OK' for Yes, 'Cancel' for No.");
-            if (hasAccount) {
-                signIn();
-            } else {
-                signUp();
-            }
-        }
-
-        window.onload = startApp; // Start the app when the page loads
     </script>
-</head>
-<body>
-    <div id="content" style="display:none;">
-        <h1>Welcome to the Protected Page!</h1>
-        <p>This is your secure content.</p>
-    </div>
 </body>
 </html>
