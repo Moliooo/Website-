@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .task {
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .hidden {
+      display: none;
+    }
+    .balance {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Task Website</h1>
+  </header>
+
+  <div class="container" id="loginPage">
+    <h2>Login</h2>
+    <label for="username">Enter your username:</label>
+    <input type="text" id="username" placeholder="Your username">
+    <button onclick="login()">Login</button>
+  </div>
+
+  <div class="container hidden" id="taskPage">
+    <h2>Welcome, <span id="user"></span></h2>
+    <p>Your balance: <span class="balance" id="balance">0</span> points</p>
+    <h3>Available Tasks</h3>
+    <div class="task">
+      <span>Task 1: Follow on Twitter (+10 points)</span>
+      <button onclick="completeTask(10)">Complete</button>
+    </div>
+    <div class="task">
+      <span>Task 2: Join Telegram Group (+15 points)</span>
+      <button onclick="completeTask(15)">Complete</button>
+    </div>
+    <div class="task">
+      <span>Task 3: Download App (+20 points)</span>
+      <button onclick="completeTask(20)">Complete</button>
+    </div>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    let user = null;
+    let balance = 0;
+
+    // Login function
+    function login() {
+      const usernameInput = document.getElementById("username").value;
+      if (usernameInput.trim() === "") {
+        alert("Please enter a valid username.");
+        return;
+      }
+
+      user = usernameInput;
+      balance = localStorage.getItem(user) ? parseInt(localStorage.getItem(user)) : 0;
+
+      document.getElementById("user").innerText = user;
+      document.getElementById("balance").innerText = balance;
+
+      document.getElementById("loginPage").classList.add("hidden");
+      document.getElementById("taskPage").classList.remove("hidden");
+    }
+
+    // Complete task function
+    function completeTask(points) {
+      balance += points;
+      localStorage.setItem(user, balance);
+      document.getElementById("balance").innerText = balance;
+      alert("Task completed! You've earned " + points + " points.");
+    }
+
+    // Logout function
+    function logout() {
+      user = null;
+      balance = 0;
+      document.getElementById("loginPage").classList.remove("hidden");
+      document.getElementById("taskPage").classList.add("hidden");
+    }
+  </script>
+</body>
+</html>
